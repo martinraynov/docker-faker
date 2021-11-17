@@ -1,0 +1,36 @@
+#!/bin/sh
+# Description:
+# This script execute a test run of faker2db command
+
+############################ FUNCTIONS ############################
+validateParams()
+{
+    if [ -z "${DB_VENDOR}" ]; then echo "Environment variable \$DB_VENDOR is empty, please set this before running the script" && exit 1; fi
+    if [ -z "${DB_HOST}" ]; then echo "Environment variable \$DB_HOST is empty, please set this before running the script" && exit 1; fi
+    if [ -z "${DB_PORT}" ]; then echo "Environment variable \$DB_PORT is empty, please set this before running the script" && exit 1; fi
+    if [ -z "${DB_USER}" ]; then echo "Environment variable \$DB_USER is empty, please set this before running the script" && exit 1; fi
+    if [ -z "${DB_PASSWORD}" ]; then echo "Environment variable \$DB_PASSWORD is empty, please set this before running the script" && exit 1; fi
+    if [ -z "${LOCALE}" ]; then echo "Environment variable \$LOCALE is empty, please set this before running the script" && exit 1; fi
+    if [ -z "${ROWS}" ]; then echo "Environment variable \$ROWS is empty, please set this before running the script" && exit 1; fi
+}
+
+run()
+{
+    # fake2db --rows 1500 --db postgresql --host 127.0.0.1 --port 5432 --user faker --password faker --locale bg_BG
+    fake2db --rows ${ROWS} \
+        --db ${DB_VENDOR} \
+        --host ${DB_HOST} \
+        --port ${DB_PORT} \
+        --user ${DB_USER} \
+        --password ${DB_PASSWORD} \
+        --name ${DB_NAME} \
+        --locale ${LOCALE} \
+        --custom ${CUSTOM}
+}
+
+###################################################################
+
+############################## MAIN ###############################
+validateParams
+run
+###################################################################

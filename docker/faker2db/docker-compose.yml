@@ -1,0 +1,29 @@
+version: '3.7'
+
+networks:
+  default:
+    external: true
+    name: lb-common
+
+services:
+  faker2db:
+    image: localhost/faker2db:local
+    build:
+      context: .
+      args:
+        UID: ${_UID}
+        GID: ${GID}
+    volumes:
+      - ./run_test:/srv/faker2db/run_test
+    networks:
+      - default
+    environment:
+      DB_VENDOR: ${DB_VENDOR}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      LOCALE: ${LOCALE}
+      ROWS: ${ROWS}
+      CUSTOM: ${CUSTOM}
